@@ -33,6 +33,117 @@ def ints() -> Tuple[List[Formula], Formula]:
     formulas = []
     # BEGIN_YOUR_CODE (our solution is 16 lines of code, but don't worry if you deviate from this)
     # TODO
+    x = '$x'
+    y = '$y'
+    z = '$z'
+    # Formula a
+    #∀x∃y(Successor(x,y)⋀x≠y∀z(Successor(x,z)→z=y))
+    formulas.append(
+        Forall(
+          x,
+          Exists(
+            y,
+            And(
+                Successor(x, y),
+                And(
+                    Not(Equals(x, y)),
+                    Forall(z, Implies(Successor(x, z), Equals(z, y)))
+                )
+            )
+        )
+        )
+    )
+
+    # Formula b
+    # ∀x((Even(x)⋁Odd(x))⋀¬(Even(x)⋀Odd(x)))
+    formulas.append(
+        Forall(
+            x,
+            And(
+                Or(Even(x), Odd(x)),
+                Not(And(Even(x), Odd(x)))
+            )
+        )
+
+
+     )
+
+    #Formula c 
+    #∀x(Even(x)→Odd(Successor(x))
+
+    formulas.append(
+        Forall(
+            x,
+            Forall(
+                y,
+                Implies(
+                    And(Even(x), Successor(x,y)),
+                    Odd(y)
+                )
+            )
+        )
+
+       
+
+
+     )
+
+    #Formula d
+    #∀x(Odd(x)→Even(Successor(x))
+    formulas.append(
+        Forall(
+            x,
+            Forall(
+                y,
+                Implies(
+                    And(Odd(x), Successor(x,y)),
+                    Even(y)
+                )
+            )
+
+
+        )
+
+     )
+    #Formula e
+    #∀xGreater(Sucessor(x),x)
+    formulas.append(
+        Forall(
+            x,
+            Forall(
+                y,
+                Implies(Successor(x,y), Larger(y, x))
+            )
+        )
+
+
+     )
+    
+    
+    
+    # Formula f
+    #∀x∀y∀z((Greater(x,y)⋀Greater(y,z))⇒Greater(x,z))
+    formulas.append(
+        Forall(
+            x,
+            Forall(
+                y,
+                Forall(
+                    z,
+                    Implies(
+                        And(Larger(x,y), Larger(y, z)),
+                        Larger(x,z)
+                    )
+                )
+            )
+        )
+
+    )
+
+
+
+
     # END_YOUR_CODE
     query = Forall('$x', Exists('$y', And(Even('$y'), Larger('$y', '$x'))))
     return formulas, query
+    
